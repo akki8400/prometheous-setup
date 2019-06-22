@@ -36,11 +36,20 @@
 - name: "Prometheus | Unarchive prometheus downloaed file"
   unarchive:
     src: "{{ monitor_tmp_dir }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
-    dest: "{{ prometheus_install_dir }}"
+    dest: "/Monitor/"
     owner: "{{ prometheus_owner }}"
     group: "{{ prometheus_group }}"
     mode: 0775
     remote_src: false
+
+- name: "Prometheus | check if dir name exists"
+  stat:
+    path: "Monitor/prometheus-{{ prometheus_version }}.linux-amd64"
+  register: fil_stat
+
+- name: "Prometheus | Rename the directory /Monitor/prometheus-{{ prometheus_version }}.linux-amd64"
+  command: "mv /Monitor/{{ prometheus_artifact_id }}-{{ prometheus_version }}.linux-amd64 {{ prometheus_install_dir }}"
+  when: fil_stat.stat.exists
 
 - name: "Prometheus | Create prometheus Service template"
   template:

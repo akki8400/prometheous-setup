@@ -3,6 +3,7 @@
 
 #Prometheus Variables
 monitor_tmp_dir: /Monitor/tmp
+install_dir: /Monitor
 prometheus_owner: prometheus
 prometheus_group: prometheus
 
@@ -22,6 +23,11 @@ node_exporter_download_url: https://github.com/prometheus/node_exporter/releases
 
 #alertmanager Variables
 alertmanager_install_dir: /Monitor/alertmanager
+alertmanager_version: 0.17.0
+alertmanager_port: 9093
+alertmanager_download_url: "https://github.com/prometheus/alertmanager/releases/download/v{{ alertmanager_version }}/alertmanager-{{ alertmanager_version }}.linux-amd64.tar.gz"
+#alertmanager-0.17.0.linux-amd64
+
 
 
 

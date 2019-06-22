@@ -68,8 +68,8 @@
     group: "{{ prometheus_group }}"
     mode:  0755
 
-#- name: "Prometheus | start prometheus service"
-#  service:
-#    name: prometheus
-#    state: restarted
-#    enabled: yes
+- name: "Prometheus | start prometheus service"
+  systemd:
+    name: prometheus
+    state: restarted
+    daemon_reload: yes

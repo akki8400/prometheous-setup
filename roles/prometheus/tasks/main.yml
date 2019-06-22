@@ -23,8 +23,8 @@
     group: "{{ prometheus_group}}"
     mode: 0775
   with_items:
-    - {{ monitor_tmp_dir }}
-    - {{ prometheus_install_dir }}
+    - monitor_tmp_dir
+    - prometheus_install_dir
 
 - name: "Prometheus | Download prometheus"
   get_url:

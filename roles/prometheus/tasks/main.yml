@@ -47,8 +47,11 @@
     path: "Monitor/prometheus-{{ prometheus_version }}.linux-amd64"
   register: fil_stat
 
+- debug:
+    var: fil_stat.stdout
+    
 - name: "Prometheus | Rename the directory /Monitor/prometheus-{{ prometheus_version }}.linux-amd64"
-  command: "mv /Monitor/prometheus-{{ prometheus_version }}.linux-amd64 {{ prometheus_install_dir }}"
+  command: "mv /Monitor/prometheus-{{ prometheus_version }}.linux-amd64 "
   when: fil_stat.stat.exists
 
 - name: "Prometheus | Create prometheus Service template"

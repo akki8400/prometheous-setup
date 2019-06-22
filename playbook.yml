@@ -7,4 +7,3 @@
 
   roles:
     - prometheus
-  when: inventory_hostname in groups['prometheus']

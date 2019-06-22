@@ -1,13 +1,15 @@
 ---
 
-- hosts: prometheus
-  become: yes
+#- hosts: prometheus
+#  become: yes
+#  vars_files:
+#    - vars/main.yml
+
+#  roles:
+#    - prometheus
+
+- hosts: node_exporter
   vars_files:
     - vars/main.yml
-
-  roles:
-    - prometheus
-
-  hosts: node_exporter
   roles:
     - node_exporter

@@ -36,22 +36,12 @@
 - name: "Prometheus | Unarchive prometheus downloaed file"
   unarchive:
     src: "{{ monitor_tmp_dir }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
-    dest: "/Monitor/"
+    dest: "{{ prometheus_install_dir }}"
     owner: "{{ prometheus_owner }}"
     group: "{{ prometheus_group }}"
     mode: 0775
     remote_src: false
 
-- name: "Prometheus | check if dir name exists"
-  stat:
-    path: "Monitor/prometheus-{{ prometheus_version }}.linux-amd64"
-  register: fil_stat
-
-- debug:
-    var: fil_stat.stdout
-
-- name: "Prometheus | Rename the directory /Monitor/prometheus-{{ prometheus_version }}.linux-amd64"
-  command: "mv /Monitor/prometheus-{{ prometheus_version }}.linux-amd64/*  /Monitor/prometheus"
 
 - name: "Prometheus | Create prometheus Service template"
   template:
@@ -65,7 +55,7 @@
 - name: "Prometheus | Placing prometheus config file"
   template:
     src: prometheus.j2
-    dest: "{{ prometheus_install_dir }}/prometheus.yml"
+    dest: "{{ prometheus_install_dir }}/prometheus-{{ prometheus_version }}.linux-amd64/prometheus.yml"
     owner: "{{ prometheus_owner }}"
     group: "{{ prometheus_group }}"
     mode:  0755
@@ -73,7 +63,7 @@
 - name: "Prometheus | Placing prometheus alert-rules configs"
   template:
     src: alert-rules.j2
-    dest: "{{ prometheus_install_dir }}/alert-rules.yml"
+    dest: "{{ prometheus_install_dir }/prometheus-{{ prometheus_version }}.linux-amd64/alert-rules.yml"
     owner: "{{ prometheus_owner }}"
     group: "{{ prometheus_group }}"
     mode:  0755

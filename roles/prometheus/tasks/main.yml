@@ -26,7 +26,7 @@
   with_items:
     - /Monitor/prometheus
     - /Monitor/tmp
-  
+
 - name: "Prometheus | Download prometheus"
   get_url:
     url: "{{ prometheus_download_url }}"
@@ -48,7 +48,7 @@
   register: fil_stat
 
 - name: "Prometheus | Rename the directory /Monitor/prometheus-{{ prometheus_version }}.linux-amd64"
-  command: "mv /Monitor/{{ prometheus_artifact_id }}-{{ prometheus_version }}.linux-amd64 {{ prometheus_install_dir }}"
+  command: "mv /Monitor/prometheus-{{ prometheus_version }}.linux-amd64 {{ prometheus_install_dir }}"
   when: fil_stat.stat.exists
 
 - name: "Prometheus | Create prometheus Service template"

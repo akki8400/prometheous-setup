@@ -63,7 +63,7 @@
 - name: "Prometheus | Placing prometheus alert-rules configs"
   template:
     src: alert-rules.j2
-    dest: "{{ prometheus_install_dir }/prometheus-{{ prometheus_version }}.linux-amd64/alert-rules.yml"
+    dest: "{{ prometheus_install_dir }}/prometheus-{{ prometheus_version }}.linux-amd64/alert-rules.yml"
     owner: "{{ prometheus_owner }}"
     group: "{{ prometheus_group }}"
     mode:  0755

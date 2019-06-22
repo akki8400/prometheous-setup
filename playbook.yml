@@ -7,3 +7,7 @@
 
   roles:
     - prometheus
+
+  hosts: node_exporter
+  roles:
+    - node_exporter

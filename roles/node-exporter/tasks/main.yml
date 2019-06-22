@@ -1,2 +1,59 @@
 ---
 # tasks file for node-exporter
+
+
+- name: "Node_exporter | Add group prometheus"
+  group:
+    name: "{{ prometheus_group }}"
+    system: yes
+    state: present
+
+- name: "Node_exporter | Add Prometheus system user"
+  user:
+    name: "{{ prometheus_owner }}"
+    comment: prometheus to run exporters
+    shell: /sbin/nologin
+    system: yes
+    state: present
+    group: "{{ prometheus_group }}"
+
+- name: "Node_exporter | Create installation folders"
+  file:
+    path: "{{ item }}"
+    owner: "{{ prometheus_owner }}"
+    group: "{{ prometheus_group}}"
+    mode: 0775
+    state: directory
+  with_items:
+    - /Monitor/node_exporter
+    - /Monitor/tmp
+
+- name: "Node_exporter | Download node_exporter"
+  get_url:
+    url: "{{ node_exporter_download_url }}"
+    dest: "{{ monitor_tmp_dir }}"
+    mode:  0775
+
+- name: "Node_exporter | Unarchive prometheus downloaed file"
+  unarchive:
+    src: "{{ monitor_tmp_dir }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+    dest: "{{ node_exporter_install_dir }}"
+    owner: "{{ prometheus_owner }}"
+    group: "{{ prometheus_group }}"
+    mode: 0775
+    remote_src: false
+
+- name: "Node_exporter | Create prometheus Service template"
+  template:
+    src: node_exporter.service.j2
+    dest: "/etc/systemd/system/node_exporter.service"
+    owner: "{{ prometheus_owner }}"
+    group: "{{ prometheus_group }}"
+    mode:  0755
+  when: ansible_distribution_major_version > '6'
+
+- name: "Node_exporter | start node_exporter service"
+  systemd:
+    name: node_exporter
+    state: restarted
+    daemon_reload: yes

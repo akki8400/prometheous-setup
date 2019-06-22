@@ -14,7 +14,11 @@ prometheus_download_url: "https://github.com/prometheus/prometheus/releases/down
 
 #node_exporter Variables
 node_exporter_install_dir: /Monitor/node_exporter
-
+node_exporter_port: 9100
+node_exporter_version: 0.18.1
+node_exporter_download_url: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
+#https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz
+#node_exporter-0.18.1.linux-amd64
 
 #alertmanager Variables
 alertmanager_install_dir: /Monitor/alertmanager

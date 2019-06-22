@@ -12,8 +12,8 @@ Restart=on-failure
 #Prometheus on different path user
 ExecStart={{ prometheus_install_dir}}/prometheus-{{ prometheus_version }}.linux-amd64/prometheus \
   --config.file={{ prometheus_install_dir }}/prometheus-{{ prometheus_version }}.linux-amd64/prometheus.yml \
-  --storage.tsdb.path={{ prometheus_install_dir }}/prometheus-{{ prometheus_version }}.linux-amd64/data \
-  --web.listen-address="0.0.0.0:{{ prometheus_port }}"
+  --storage.tsdb.path={{ prometheus_install_dir }}/prometheus-{{ prometheus_version }}.linux-amd64/data
+
 
 [Install]
 WantedBy=multi-user.target

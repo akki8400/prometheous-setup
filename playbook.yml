@@ -12,4 +12,4 @@
   vars_files:
     - vars/main.yml
   roles:
-    - node_exporter
+    - node-exporter

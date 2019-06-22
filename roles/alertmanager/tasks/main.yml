@@ -28,13 +28,13 @@
     - /Monitor/alertmanager
     - /Monitor/tmp
 
-- name: "Alertmanager | Download prometheus"
+- name: "Alertmanager | Download alertmanager"
   get_url:
     url: "{{ alertmanager_download_url }}"
     dest: "{{ monitor_tmp_dir }}"
     mode:  0775
 
-- name: "Alertmanager | Unarchive prometheus downloaed file"
+- name: "Alertmanager | Unarchive alertmanager downloaed file"
   unarchive:
     src: "{{ monitor_tmp_dir }}/alertmanager-{{ alertmanager_version }}.linux-amd64.tar.gz"
     dest: "{{ alertmanager_install_dir }}"
@@ -56,7 +56,7 @@
 - name: "Alertmanager | Placing alertmanager config file"
   template:
     src: alertmanager.yml.j2
-    dest: "{{ monitor_tmp_dir }}/alertmanager-{{ alertmanager_version }}.linux-amd64/alertmanager.yml"
+    dest: "{{ alertmanager_install_dir }}/alertmanager-{{ alertmanager_version }}.linux-amd64/alertmanager.yml"
     owner: "{{ prometheus_owner }}"
     group: "{{ prometheus_group }}"
     mode:  0755

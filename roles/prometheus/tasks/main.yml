@@ -49,10 +49,9 @@
 
 - debug:
     var: fil_stat.stdout
-    
+
 - name: "Prometheus | Rename the directory /Monitor/prometheus-{{ prometheus_version }}.linux-amd64"
-  command: "mv /Monitor/prometheus-{{ prometheus_version }}.linux-amd64 "
-  when: fil_stat.stat.exists
+  command: "mv /Monitor/prometheus-{{ prometheus_version }}.linux-amd64  /Monitor/prometheus"
 
 - name: "Prometheus | Create prometheus Service template"
   template:

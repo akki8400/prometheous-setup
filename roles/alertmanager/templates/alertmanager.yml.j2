@@ -1,20 +1,20 @@
 global:
   smtp_smarthost: '{{ alert_smtp_smarthost }}'
   smtp_from: '{{ alert_smtp_from }}'
-  smtp_auth_username: 'vermaakki8400@gmail.com'
-  smtp_auth_password: 'June@8400'
+  smtp_auth_username: '{{ alert_smtp_auth_username }}'
+  smtp_auth_password: '{{ alert_smtp_auth_password }}'
   smtp_require_tls: true
-  slack_api_url: 'https://hooks.slack.com/services/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'
+  slack_api_url: '{{ alert_slack_api_url }}'
 
 route:
   group_by: ['alertname']
-  receiver: 'Pro-alert'
+  receiver: '{{ alert_reciver }}'
   group_interval: 1m
 
 receivers:
-- name: 'Pro-alert'
+- name: '{{ alert_reciver }}'
   email_configs:
-  - to: 'akash.verma7303@gmail.com'
+  - to: '{{ alert_to_email }}'
 {% raw %}
     text: 'summary: {{ .CommonAnnotations.summary }}\ndescription: {{ .CommonAnnotations.description }}'
 {% endraw %}

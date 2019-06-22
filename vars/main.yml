@@ -27,7 +27,14 @@ alertmanager_version: 0.17.0
 alertmanager_port: 9093
 alertmanager_download_url: "https://github.com/prometheus/alertmanager/releases/download/v{{ alertmanager_version }}/alertmanager-{{ alertmanager_version }}.linux-amd64.tar.gz"
 #alertmanager-0.17.0.linux-amd64
-
+alert_smtp_smarthost: 'smtp.gmail.com:587'
+alert_smtp_from: 'vermaakki8400@gmail.com'
+alert_smtp_auth_username: 'vermaakki8400@gmail.com'
+alert_smtp_auth_password: 'June@8400'
+alert_smtp_require_tls: true
+alert_slack_api_url: 'https://hooks.slack.com/services/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'
+alert_reciver: pro-alert
+alert_to_email: 'akash.verma7304@gmail.com'
 
 
 

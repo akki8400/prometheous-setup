@@ -1,12 +1,12 @@
 ---
 
-#- hosts: prometheus
-#  become: yes
-#  vars_files:
-#    - vars/main.yml
+- hosts: prometheus
+  become: yes
+  vars_files:
+    - vars/main.yml
 
-#  roles:
-#    - prometheus
+  roles:
+    - prometheus
 
 #- hosts: node_exporter
 #  vars_files:
@@ -14,8 +14,8 @@
 #  roles:
 #    - node-exporter
 
-- hosts: alertmanager
-  vars_files:
-    - vars/main.yml
-  roles:
-    - alertmanager
+#- hosts: alertmanager
+#  vars_files:
+#    - vars/main.yml
+#  roles:
+#    - alertmanager

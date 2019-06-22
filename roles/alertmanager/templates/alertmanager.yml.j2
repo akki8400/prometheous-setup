@@ -2,23 +2,26 @@ global:
   smtp_smarthost: 'smtp.gmail.com:587'
   smtp_from: 'vermaakki8400@gmail.com'
   smtp_auth_username: 'vermaakki8400@gmail.com'
-  smtp_auth_password: 'June@8400'
+  smtp_auth_password: '*********'
   smtp_require_tls: true
   slack_api_url: 'https://hooks.slack.com/services/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'
 
 route:
   group_by: ['alertname']
   receiver: 'Pro-alert'
-  group_interval: 1m 
+  group_interval: 1m
 
 receivers:
 - name: 'Pro-alert'
   email_configs:
   - to: 'akash.verma7303@gmail.com'
+{% raw %}
     text: 'summary: {{ .CommonAnnotations.summary }}\ndescription: {{ .CommonAnnotations.description }}'
+{% endraw %}
     send_resolved: true
-  slack_configs: 
+  slack_configs:
   - channel: '#prometheous'
+{% raw %}
     text: "<!channel> \nsummary: {{ .CommonAnnotations.summary }}\ndescription: {{ .CommonAnnotations.description }}"
+{% endraw %}
     send_resolved: true
-

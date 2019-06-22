@@ -8,7 +8,7 @@ alerting:
   alertmanagers:
     - static_configs:
     - targets:
-       - "{{ groups['alertmanager'] | map('extract', hostvars, ['ansible_eth0', 'ipv4', 'address']):{{ alertmanager_port }}"
+       - localhost:9093
 
 
 #ALert rules files
@@ -24,23 +24,3 @@ scrape_configs:
   - job_name: 'prometheus'
     static_configs:
     - targets: ['localhost:{{ prometheus_port }}']
-
-
-# adding node_exporter exporters
-  - job_name: 'Linux-Nodes'
-    static_configs:
-    - targets: ["{{ groups['node_exporter'] | map('extract', hostvars, ['ansible_eth0', 'ipv4', 'address']) | join(':9100,') }}"]
-
-
-
-# Adding Cadvisor exporters
-  - job_name: 'cadvisor'
-    static_configs:
-    - targets: ["{{ groups['cadvisor'] | map('extract', hostvars, ['ansible_eth0', 'ipv4', 'address']) | join(':8080,') }}"]
-
-
-
-#Adding alertmanager exporters
-  - job_name: 'Alertmanager'
-    static_configs:
-    - targets: ["{{ groups['client-nodes'] | map('extract', hostvars, ['ansible_eth0', 'ipv4', 'address']) | join(':9093,') }}"]

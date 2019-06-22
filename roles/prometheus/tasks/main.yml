@@ -18,7 +18,7 @@
 
 - name: "Prometheus | Create installation folders"
   file:
-    path: {{ item }}
+    path: "{{ item }}"
     owner: "{{ prometheus_owner }}"
     group: "{{ prometheus_group}}"
     mode: 0775

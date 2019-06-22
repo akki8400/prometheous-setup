@@ -1,0 +1,24 @@
+---
+
+
+#Prometheus Variables
+monitor_tmp_dir: /Monitor/tmp
+prometheus_owner: prometheus
+prometheus_group: prometheus
+
+prometheus_install_dir: /Monitor/prometheus
+prometheus_port: 9090
+prometheus_version: 2.10.0
+prometheus_download_url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
+#https://github.com/prometheus/prometheus/releases/download/v2.10.0/prometheus-2.10.0.linux-amd64.tar.gz
+
+#node_exporter Variables
+node_exporter_install_dir: /Monitor/node_exporter
+
+
+#alertmanager Variables
+alertmanager_install_dir: /Monitor/alertmanager
+
+
+
+#Cadvisor Variables

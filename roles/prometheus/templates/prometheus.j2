@@ -1,29 +1,47 @@
 global:
   scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
   evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
-
 # Alertmanager configuration
+
+{% if 'alertmanager' in group_names %}
 alerting:
   alertmanagers:
   - static_configs:
     - targets:
-       - localhost:9093
+       - "{{ groups['alertmanager'] | map('extract', hostvars, ['ansible_eth0', 'ipv4', 'address']):{{ alertmanager_port }}"
+{% endif %}
 
+#ALert rules files
+{% if 'alertmanager' in group_names %}
 rule_files:
-  - "/U01/prometheus/alert-rules.yml"
+  - "{{ prometheus_install_dir }}/alert-rules.yml"
+{% endif %}
+
 
 scrape_configs:
+
+#Adding prometheus exporters
   - job_name: 'prometheus'
     static_configs:
-    - targets: ['localhost:9090']
-  
-  - job_name: 'HOST-172.31.2.68'
-    static_configs:
-    - targets: ['172.31.2.68:9100']
+    - targets: ['localhost:{{ prometheus_port }}']
 
-  - job_name: 'LOCALHOST'
+{% if 'node_exporter' in group_names %}
+# adding node_exporter exporters
+  - job_name: 'Linux-Nodes'
     static_configs:
-    - targets: ['localhost:9100']
+    - targets: ["{{ groups['node_exporter'] | map('extract', hostvars, ['ansible_eth0', 'ipv4', 'address']) | join(':9100,') }}"]
+{% endif %}
+
+{% if 'cadvisor' in group_names %}
+# Adding Cadvisor exporters
+  - job_name: 'cadvisor'
+    static_configs:
+    - targets: ["{{ groups['cadvisor'] | map('extract', hostvars, ['ansible_eth0', 'ipv4', 'address']) | join(':8080,') }}"]
+{% endif %}
+
+{% if 'alertmanager' in group_names %}
+#Adding alertmanager exporters
   - job_name: 'Alertmanager'
     static_configs:
-    - targets: ['localhost:9093']
+    - targets: ["{{ groups['client-nodes'] | map('extract', hostvars, ['ansible_eth0', 'ipv4', 'address']) | join(':9093,') }}"]
+{% endif %}

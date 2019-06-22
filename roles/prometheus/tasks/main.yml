@@ -1,2 +1,73 @@
 ---
 # tasks file for prometheus
+
+- name: "Prometheus | Add group prometheus"
+  group:
+    name: "{{ prometheus_group }}"
+    system: yes
+    state: present
+
+- name: "Prometheus | Add Prometheus system user"
+  user:
+    name: "{{ prometheus_owner }}"
+    comment: prometheus to run exporters
+    shell: /sbin/nologin
+    system: yes
+    state: present
+    group: "{{ prometheus_group }}"
+
+- name: "Prometheus | Create installation folders"
+  file:
+    path: {{ item }}
+    owner: "{{ prometheus_owner }}"
+    group: "{{ prometheus_group}}"
+    mode: 0775
+  with_items:
+    - {{ monitor_tmp_dir }}
+    - {{ prometheus_install_dir }}
+
+- name: "Prometheus | Download prometheus"
+  get_url:
+    url: "{{ prometheus_download_url }}"
+    dest: "{{ monitor_tmp_dir }}"
+    mode:  0775
+
+- name: "Prometheus | Unarchive prometheus downloaed file"
+  unarchive:
+    src: "{{ monitor_tmp_dir }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
+    dest: "{{ prometheus_install_dir }}"
+    owner: "{{ prometheus_owner }}"
+    group: "{{ prometheus_group }}"
+    mode: 0775
+    remote_src: false
+
+- name: "Prometheus | Create prometheus Service template"
+  template:
+    src: prometheus.service.j2
+    dest: "/etc/systemd/system/prometheus.service"
+    owner: "{{ prometheus_owner }}"
+    group: "{{ prometheus_group }}"
+    mode:  0755
+  when: ansible_distribution_major_version > '6'
+
+- name: "Prometheus | Placing prometheus config file"
+  template:
+    src: prometheus.j2
+    dest: "{{ prometheus_install_dir }}/prometheus.yml"
+    owner: "{{ prometheus_owner }}"
+    group: "{{ prometheus_group }}"
+    mode:  0755
+
+- name: "Prometheus | Placing prometheus alert-rules configs"
+  template:
+    src: alert-rules.j2
+    dest: "{{ prometheus_install_dir }}/alert-rules.yml"
+    owner: "{{ prometheus_owner }}"
+    group: "{{ prometheus_group }}"
+    mode:  0755
+
+- name: "Prometheus | start prometheus service"
+  service:
+    name: prometheus
+    state: restarted
+    enabled: yes

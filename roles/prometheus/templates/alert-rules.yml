@@ -1,0 +1,51 @@
+---
+groups:
+- name: Hosts
+  rules:
+  - alert: Instance Down
+    expr: up == 0
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Endpoint {{ $labels.instance }} is down"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} is down"
+
+  - alert: CPU Usages
+    expr: node_load1 * 100 > 5
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Endpoint {{ $labels.instance }} is having high load"
+      description: "Server CPU usages is {{ humanize $value }}% of {{ $labels.instance }} of job {{ $labels.job }} is having high load"
+
+  - alert: Memory Usages
+    expr: ((node_memory_MemTotal_bytes - node_memory_MemFree_bytes)/ node_memory_MemTotal_bytes) * 100 > 50
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Endpoint {{ $labels.instance }} is out of memory"
+      description: "Server Memory usage is {{ humanize $value }}% of {{ $labels.instance }} of job {{ $labels.job }} is out of memory"
+
+  - alert: Disk Usages
+    expr: ((node_filesystem_avail_bytes - node_filesystem_free_bytes)/node_filesystem_avail_bytes) * 100 > 80
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Endpoint {{ $labels.instance }} is out of Space"
+      description: "Server Space usage is {{ humanize $value }}% of {{ $labels.instance }} of job {{ $labels.job }} is out of space"
+
+  - alert: Process FDLimits
+    expr: ((process_max_fds - process_open_fds)/ process_max_fds) * 100 > 80
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Endpoint {{ $labels.instance }} is out of fds"
+      description: "Application fds usage is {{ humanize $value }}% of {{ $labels.instance }} of job {{ $labels.job }} is out of FD Limits"
+
+
+

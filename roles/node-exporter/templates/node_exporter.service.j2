@@ -5,8 +5,8 @@ After=network-online.target
 
 [Service]
 User=prometheus
-ExecStart=/U01/node_exporter/node_exporter
+Group=prometheus
+ExecStart={{ node_exporter_install_dir}}/node_exporter
 
 [Install]
 WantedBy=default.target
-

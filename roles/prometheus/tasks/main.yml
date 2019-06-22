@@ -27,6 +27,11 @@
     - /Monitor/prometheus
     - /Monitor/tmp
 
+- name: "Prometheus | removing existing setup"
+  file:
+    path: /Monitor/prometheus
+    state: absent
+    
 - name: "Prometheus | Download prometheus"
   get_url:
     url: "{{ prometheus_download_url }}"

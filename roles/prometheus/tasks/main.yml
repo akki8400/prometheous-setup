@@ -22,9 +22,10 @@
     owner: "{{ prometheus_owner }}"
     group: "{{ prometheus_group}}"
     mode: 0775
+    state: directory
   with_items:
-    - "{{ monitor_tmp_dir }}"
-    - "{{ prometheus_install_dir }}"
+    - /Monitor/prometheus
+    - /Monitor/tmp
 
 - name: "Prometheus | Download prometheus"
   get_url:

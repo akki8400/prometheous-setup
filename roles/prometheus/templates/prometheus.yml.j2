@@ -17,9 +17,12 @@ scrape_configs:
     static_configs:
     - targets: ['localhost:9090']
 
-  - job_name: 'HOST-172.31.2.68'
+  - job_name: 'Linux-nodes'
     static_configs:
-    - targets: ['172.31.2.68:9100']
+    - targets:
+    {% for host in groups['node_exporter'] %}
+    - '{{ host }}:9100'
+    {% endfor %}
 
   - job_name: 'LOCALHOST'
     static_configs:

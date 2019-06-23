@@ -1,12 +1,12 @@
 [prometheus]
 172.31.4.39 pkg=prome
 
-#[alertmanager]
-#172.31.4.39 pkg=alert
+[alertmanager]
+172.31.4.39 pkg=alert
 
-#[node_exporter]
-#172.31.4.39 pkg=node
-#172.31.2.68 pkg=node
+[node_exporter]
+172.31.4.39 pkg=node
+172.31.2.68 pkg=node
 
 
 [cadvisor]

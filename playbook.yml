@@ -5,9 +5,12 @@
   vars_files:
     - vars/main.yml
 
-- hosts: cadvisor
+
   roles:
-    - cadvisor
+    - { role: prometheus, when:  inventory_file == "prometheus" }
+#- hosts: cadvisor
+#  roles:
+#    - cadvisor
 
 #- hosts: node_exporter
 #  vars_files:

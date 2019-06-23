@@ -48,4 +48,24 @@ groups:
       summary: "Endpoint {{ $labels.instance }} is out of fds"
       description: "Application fds usage is {{ humanize $value }}% of {{ $labels.instance }} of job {{ $labels.job }} is out of FD Limits"
 
+- name: containers
+  rules:
+  - alert: "Container Stopped"
+    expr: (time() - container_last_seen) > 30
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Container killed (instance {{ $labels.instance }})"
+      description: "A container has disappeared\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+  - alert: Container CPU Usages
+    expr: sum(rate(container_cpu_usage_seconds_total[1m])) / count(node_cpu_seconds_total{mode="system"}) * 100 > 10
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Endpoint {{ $labels.instance }} high cpu usages"
+      description: "Container CPU usage is {{ humanize $value }}% of {{ $labels.instance }} of job {{ $labels.job }}"
+
 {% endraw %}

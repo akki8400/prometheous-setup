@@ -1,32 +1,27 @@
 ---
 
-#- hosts: all
-#  become: yes
-#  vars_files:
-#    - vars/main.yml
+#Cadvisor installation
+- hosts: cadvisor
+  vars_files:
+    - vars/main.yml
+  roles:
+    - cadvisor
 
+#node_exporter installation
+- hosts: node_exporter
+  vars_files:
+    - vars/main.yml
+  roles:
+    - node-exporter
 
-#  roles:
-#    - { role: cadvisor, when: pkg == "cadr" }
-#    - { role: node-exporter, when: pkg == "node" }
-#    - { role: alertmanager, when: pkg == "alert" }
-#    - { role: prometheus, when: pkg == "prome" }
-#- hosts: cadvisor
-#  roles:
-#    - cadvisor
+#alertmanager installation
+- hosts: alertmanager
+  vars_files:
+    - vars/main.yml
+  roles:
+    - alertmanager
 
-#- hosts: node_exporter
-#  vars_files:
-#    - vars/main.yml
-#  roles:
-#    - node-exporter
-
-#- hosts: alertmanager
-#  vars_files:
-#    - vars/main.yml
-#  roles:
-#    - alertmanager
-
+#prometheus installation
 - hosts: prometheus
   become: yes
   vars_files:

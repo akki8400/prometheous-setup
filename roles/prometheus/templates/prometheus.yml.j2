@@ -8,7 +8,7 @@ alerting:
   - static_configs:
     - targets:
     {% for host in groups['alertmanager'] %}
-       - {{ host }}:{{ alertmanager_port }}
+    - {{ host }}:{{ alertmanager_port }}
     {% endfor %}
 
 rule_files:

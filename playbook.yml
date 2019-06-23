@@ -7,6 +7,9 @@
 
 
   roles:
+    - { role: cadvisor, when: pkg == "cadr" }
+    - { role: node-exporter, when: pkg == "node" }
+    - { role: alertmanager, when: pkg == "alert" }
     - { role: prometheus, when: pkg == "prome" }
 #- hosts: cadvisor
 #  roles:

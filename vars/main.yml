@@ -39,3 +39,21 @@ alert_to_email: 'akash.verma7304@gmail.com'
 
 
 #Cadvisor Variables
+container_cadvisor_name: cadvisor
+container_cadvisor_image: google/cadvisor:latest
+container_cadvisor_memory_limit: 512MB
+container_cadvisor_net: default
+container_cadvisor_expose:
+  - 8080
+container_cadvisor_ports:
+  - 8080:8080
+container_cadvisor_volumes:
+    - "/:/rootfs:ro"
+    - "/var/run:/var/run:rw"
+    - "/sys:/sys:ro"
+    - "/var/lib/docker/:/var/lib/docker:ro"
+    - "/cgroup:/cgroup:ro"
+container_cadvisor_log_driver: syslog
+container_cadvisor_log_opt:
+  syslog-facility: local0
+  tag: "{{ container_cadvisor_name }}"

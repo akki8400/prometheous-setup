@@ -1,2 +1,17 @@
 ---
 # tasks file for cadvisor
+
+- name: "Cadvisor | Run docker cadvisor container"
+  become: true
+  docker_container:
+    expose: "{{ container_cadvisor_expose }}"
+    image: "{{ container_cadvisor_image }}"
+    name: "{{ container_cadvisor_name }}"
+    ports: "{{ container_cadvisor_ports }}"
+    volumes: "{{ container_cadvisor_volumes }}"
+    memory: "{{ container_cadvisor_memory_limit }}"
+    log_driver: "{{ container_cadvisor_log_driver }}"
+    log_opt: "{{ container_cadvisor_log_opt }}"
+    privileged: yes
+    pull: yes
+    restart_policy: always

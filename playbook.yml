@@ -7,7 +7,7 @@
 
 
   roles:
-    - { role: prometheus, when:  pkg == "prome" }
+    - { role: prometheus, when: pkg == "prome" }
 #- hosts: cadvisor
 #  roles:
 #    - cadvisor

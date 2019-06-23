@@ -69,7 +69,7 @@
     owner: "{{ prometheus_owner }}"
     group: "{{ prometheus_group }}"
     mode:  0755
-    validate: "{{ prometheus_install_dir }}/prometheus-{{ prometheus_version }}.linux-amd64/promtool check rules %s"
+#    validate: "{{ prometheus_install_dir }}/prometheus-{{ prometheus_version }}.linux-amd64/promtool check rules %s"
 
 - name: "Prometheus | start prometheus service"
   systemd:

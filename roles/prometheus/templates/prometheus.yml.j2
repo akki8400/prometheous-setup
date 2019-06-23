@@ -10,6 +10,7 @@ alerting:
     {% for host in groups['alertmanager'] %}
        - {{ host }}:{{ alertmanager_port }}
     {% endfor %}
+
 rule_files:
   - "{{ prometheus_install_dir }}/prometheus-{{ prometheus_version }}.linux-amd64/alert-rules.yml"
 

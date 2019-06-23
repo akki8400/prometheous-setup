@@ -47,6 +47,14 @@ groups:
     annotations:
       summary: "Endpoint {{ $labels.instance }} is out of fds"
       description: "Application fds usage is {{ humanize $value }}% of {{ $labels.instance }} of job {{ $labels.job }} is out of FD Limits"
+  - alert: NodeHasSwap
+    expr: node_memory_SwapTotal_bytes > 0
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Node has swap (instance {{ $labels.instance }})"
+      description: "Node has swap\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
 - name: containers
   rules:
@@ -67,5 +75,12 @@ groups:
     annotations:
       summary: "Endpoint {{ $labels.instance }} high cpu usages"
       description: "Container CPU usage is {{ humanize $value }}% of {{ $labels.instance }} of job {{ $labels.job }}"
-
+  - alert: Container Memory Usages
+    expr: (container_memory_usage_bytes/node_memory_MemTotal_bytes) * 100 > 30
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Endpoint {{ $labels.instance }} high Memory usages"
+      description: "Container memory usage is {{ humanize $value }}% of {{ $labels.instance }} of job {{ $labels.job }}"
 {% endraw %}

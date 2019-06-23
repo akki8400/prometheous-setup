@@ -7,23 +7,37 @@ alerting:
   alertmanagers:
   - static_configs:
     - targets:
-       - localhost:9093
-
+    {% for host in groups['alertmanager'] %}
+       - {{ host }}:{{ alertmanager_port }}
+    {% endfor %}
 rule_files:
   - "{{ prometheus_install_dir }}/prometheus-{{ prometheus_version }}.linux-amd64/alert-rules.yml"
 
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
-    - targets: ['localhost:9090']
+    - targets:
+    {% for host in groups['prometheus'] %}
+    - '{{ host }}:{{ prometheus_port }}'
+    {% endfor %}
 
   - job_name: 'Linux-nodes'
     static_configs:
     - targets:
     {% for host in groups['node_exporter'] %}
-    - '{{ host }}:9100'
+    - '{{ host }}:{{ node_exporter_port }}'
     {% endfor %}
 
   - job_name: 'Alertmanager'
     static_configs:
-    - targets: ['localhost:9093']
+    - targets:
+    {% for host in groups['alertmanager'] %}
+    - '{{ host }}:{{ alertmanager_port }}'
+    {% endfor %}
+
+  - job_name: 'Cadvisor'
+    static_configs:
+    - targets:
+    {% for host in groups['cadvisor'] %}
+    - '{{ host }}:{{ cadvisor_port }}'
+    {% endfor %}

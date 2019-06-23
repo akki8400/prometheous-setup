@@ -39,6 +39,7 @@ alert_to_email: 'akash.verma7304@gmail.com'
 
 
 #Cadvisor Variables
+cadvisor_port: 8080
 container_cadvisor_name: cadvisor
 container_cadvisor_image: google/cadvisor:latest
 container_cadvisor_memory_limit: 512MB

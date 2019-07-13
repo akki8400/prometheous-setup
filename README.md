@@ -1,7 +1,8 @@
 # prometheous-setup
 This repo is for complete setup of prometheous
 
-This repository setups the complete stack of prometheus.
+This repository setup's the complete stack of prometheus.
+
 Setups :
 
 Prometheus
@@ -10,7 +11,7 @@ Node Exporter
 Cadvisor
 
 
-All config varibbles are defined at:
+All config variables are defined at:
 
 ```
 var/main.yml
